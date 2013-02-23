@@ -1,2 +1,2 @@
 PACKAGES="libnfc-bin"
-REQUIRE="usb mods/vfd_lcd"
+REQUIRE="usb mods/vfd_lcd core"
