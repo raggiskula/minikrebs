@@ -1,1 +1,1 @@
-PACKAGES="stty"
+PACKAGES="coreutils-stty"
