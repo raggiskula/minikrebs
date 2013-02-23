@@ -1,0 +1,4 @@
+# Minimal Modules
+
+These modules actually remove specific traits in order to shrink the profiles
+in size.
