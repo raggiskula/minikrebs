@@ -1,0 +1,10 @@
+#!/bin/sh
+# sets nfc_refresh if button is pressed
+# nfc_refresh changes behavior of login-manager to not 'toggle' status but to log in again
+if [ "$ACTION" = "pressed" ];then
+        all_led timer
+        touch /tmp/nfc_refresh
+else
+        all_led none
+        rm -f /tmp/nfc_refresh
+fi

@@ -1,0 +1,2 @@
+PACKAGES="libnfc-bin"
+REQUIRE="usb mods/vfd_lcd"
