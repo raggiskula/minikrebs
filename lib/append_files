@@ -1,2 +1,2 @@
 etc/rc.local
-etc/firstboot.commands
+etc/firstrun.commands
