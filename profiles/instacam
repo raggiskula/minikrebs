@@ -2,4 +2,5 @@ core
 minimal/no-ppp
 minimal/no-dnsmasq
 network/client-mode
-instacam/uvc
+special_purpose/instacam
+special_purpose/instacam/uvc
