@@ -6,8 +6,8 @@ if [ -n "$RRLOG" ]; then
   echo `awk '{print $1}' /proc/uptime` $REMOTE_ADDR:$REMOTE_PORT \'$HTTP_REFERER\' \'$HTTP_USER_AGENT\' >>"$RRLOG"
 fi
 
-if [ grep -q '[none]' /sys/class/leds/tp-link\:blue\:system/trigger ];then
-    /usr/bin/led tp-link:blue:system timer 
+if  grep -q '\[none\]' /sys/class/leds/tp-link\:blue\:system/trigger ;then
+    /usr/bin/led tp-link:blue:system default-on
 else
     /usr/bin/led tp-link:blue:system none
 
