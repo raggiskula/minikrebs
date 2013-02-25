@@ -21,7 +21,7 @@ BUILD_DIR="${HERE}/builder/"
 PLATFORM="${PLATFORM:-TLWR703}"
 PROFILE="$PROFILE_DIR/$1"
 ALL_PACKAGES=""
-APPEND_FILES=("etc/rc.local")
+APPEND_FILES="${HERE}/lib/append_files"
 
 indent() {
     while read line;do
@@ -32,9 +32,8 @@ indent() {
 
 handle_append(){
     local CURRENT_TRAIT_DIR="$1"
-    for i in ${APPEND_FILES[@]};do
-        [ -e "$CURRENT_TRAIT_DIR/files/$i" ] && cat "$CURRENT_TRAIT_DIR/files/$i" >>\
-            "$BUILD_DIR/customfiles/$i"
+    cat ${APPEND_FILES}| while read i;do
+        [ -e "$CURRENT_TRAIT_DIR/files/$i" ]  && cat "$CURRENT_TRAIT_DIR/files/$i" >> "$BUILD_DIR/customfiles/$i"
     done
 }
 handle_trait_dir(){
@@ -45,9 +44,10 @@ handle_trait_dir(){
         # higher level traits supersede more general definitions
         cd "$CUR"
         #echo "in $CUR" >&2
+
         handle_trait_dir .. ||:
         if [ -e "$CUR/files" ] ;then
-            rsync -rl --exclude "$APPEND_FILES" "$CUR/files/"* "$BUILD_DIR/customfiles" >/dev/null
+            rsync -rl --exclude-from="$APPEND_FILES" "$CUR/files/"* "$BUILD_DIR/customfiles"
             handle_append "$CUR"
         fi
         if [ -e "$CUR/MANIFEST" ];then
