@@ -7,18 +7,22 @@ cd $(dirname $(readlink -f $0))
 if grep -q $PWD/mnt/overlay /etc/mtab;then
     echo "overlay mounted"
     echo "copying overlay data:"
-    find overlay/ -mindepth 1 -maxdepth 1 | while read data; do
+    find 
+    find mnt/overlay/ -mindepth 1 -maxdepth 1 | while read data; do
+        rm -r $data
+    done
+    [ -e overlay/ ] && find overlay/ -mindepth 1 -maxdepth 1 | while read data; do
         echo "  $data -> mnt/overlay/$(basename $data)"
         rm -rf      mnt/overlay/$(basename $data)
         cp -r $data mnt/overlay
     done
     for i in `cat overlay_packages`;do
         mkdir -p mnt/overlay/packages
-        cp -r packages/${i}*.ipkg mnt/overlay/packages
+        cp -r packages/${i}*.ipk mnt/overlay/packages
     done
     echo
     echo "unmounting overlay"
-    umount mnt/overlay/
+    echo \`umount mnt/overlay/\`
 else
     mkdir -p $PWD/mnt/overlay
     echo "please mount your overlay to $PWD/mnt/overlay"
