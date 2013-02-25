@@ -1,1 +1,2 @@
 PACKAGES="block-mount kmod-fs-ext4 kmod-usb-storage"
+DEPENDS="core/firstrun"
