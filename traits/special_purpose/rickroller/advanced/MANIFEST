@@ -1,0 +1,2 @@
+OVERLAY_PACKAGES="aircrack-ng libopenssl libpcap"
+DEPENDS="core/firstrun"
