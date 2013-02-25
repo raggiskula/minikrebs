@@ -12,6 +12,10 @@ if grep -q $PWD/mnt/overlay /etc/mtab;then
         rm -rf      mnt/overlay/$(basename $data)
         cp -r $data mnt/overlay
     done
+    for i in `cat overlay_packages`;do
+        mkdir -p mnt/overlay/packages
+        cp -r packages/${i}*.ipkg mnt/overlay/packages
+    done
     echo
     echo "unmounting overlay"
     umount mnt/overlay/

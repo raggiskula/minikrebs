@@ -20,7 +20,8 @@ TRAIT_DIR="${TRAIT_DIR:-${HERE}/traits}"
 BUILD_DIR="${HERE}/builder/"
 PLATFORM="${PLATFORM:-TLWR703}"
 PROFILE="$PROFILE_DIR/$1"
-ALL_PACKAGES=""
+PKG_FILE="${BUILD_DIR}/root_packages"
+OVERLAY_PKG_FILE="${BUILD_DIR}/overlay_packages"
 APPEND_FILES="${HERE}/lib/append_files"
 
 indent() {
@@ -52,7 +53,8 @@ handle_trait_dir(){
         fi
         if [ -e "$CUR/MANIFEST" ];then
             source "$CUR/MANIFEST"
-            echo -n "$PACKAGES " 
+            echo -n "${PACKAGES:-} " >> $PKG_FILE
+            echo -n "${OVERLAY_PACKAGES:-} " >> $OVERLAY_PKG_FILE
         fi
     fi
 
@@ -61,18 +63,19 @@ handle_trait_dir(){
 build_custom_make(){ 
     #hack to avoid newlines in build file
     PLATFORM="$1"
-    shift
-    echo "make image PROFILE='$PLATFORM' PACKAGES='$@' FILES=customfiles/" > \
+    
+    echo "make image PROFILE='$PLATFORM' PACKAGES='`cat $PKG_FILE`' FILES=customfiles/" > \
         "$BUILD_DIR/custom_make"
 }
 main (){
     rm -r "$BUILD_DIR/customfiles" || :
+    rm $OVERLAY_PKG_FILE $PKG_FILE
     mkdir "$BUILD_DIR/customfiles" || :
     ALL_PACKAGES=`cat "$PROFILE" | while read trait;do
         echo "Handling $TRAIT_DIR/$trait" >&2        
         handle_trait_dir "$TRAIT_DIR/$trait" ||:
     done`
-    build_custom_make "$PLATFORM" "$ALL_PACKAGES"
+    build_custom_make "$PLATFORM" 
 }
 
 main $@
