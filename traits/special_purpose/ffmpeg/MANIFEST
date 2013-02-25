@@ -1,0 +1,2 @@
+OVERLAY_PACKAGES="zlib libbz2 alsa-lib ffmpeg libpthread libffmpeg-full kmod-sound-core librt kmod-input-core"
+DEPENDS="core/firstrun"
