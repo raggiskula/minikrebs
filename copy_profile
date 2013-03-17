@@ -69,7 +69,7 @@ build_custom_make(){
 }
 main (){
     rm -r "$BUILD_DIR/customfiles" || :
-    rm $OVERLAY_PKG_FILE $PKG_FILE
+    rm $OVERLAY_PKG_FILE $PKG_FILE || :
     mkdir "$BUILD_DIR/customfiles" || :
     ALL_PACKAGES=`cat "$PROFILE" | while read trait;do
         echo "Handling $TRAIT_DIR/$trait" >&2        
