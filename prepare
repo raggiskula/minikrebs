@@ -3,7 +3,7 @@ set -euf
 IMAGEBUILDER_URL="http://downloads.openwrt.org/attitude_adjustment/12.09-beta2/ar71xx/generic/OpenWrt-ImageBuilder-ar71xx_generic-for-linux-i486.tar.bz2"
 
 cd $(dirname $(readlink -f $0))
-if [ x"${1:-}" == x ];then
+if [  -z "${1:-}"  ];then
     echo "usage: $0 PROFILE"
     echo
     HIDE_TRAITS="true" sh $(dirname $(readlink -f $0))/bin/available_profiles
