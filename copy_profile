@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -eu
 usage() {
     cat << EOF
@@ -32,13 +32,13 @@ indent() {
 }
 
 handle_append(){
-    CURRENT_TRAIT_DIR="$1"
+    local CURRENT_TRAIT_DIR="$1"
     cat ${APPEND_FILES}| while read i;do
         [ -e "$CURRENT_TRAIT_DIR/files/$i" ]  && cat "$CURRENT_TRAIT_DIR/files/$i" >> "$BUILD_DIR/customfiles/$i"
     done
 }
 handle_trait_dir(){
-    CUR="$(readlink -f $1 )"
+    local CUR="$(readlink -f $1 )"
     if [ "$(readlink -f $TRAIT_DIR )" = "$CUR" ];then
         return 0
     else
@@ -68,9 +68,9 @@ build_custom_make(){
         "$BUILD_DIR/custom_make"
 }
 main (){
-    rm -r "$BUILD_DIR/customfiles" || :
-    rm $OVERLAY_PKG_FILE $PKG_FILE || :
-    mkdir "$BUILD_DIR/customfiles" || :
+    rm -rf "$BUILD_DIR/customfiles" 
+    rm -f $OVERLAY_PKG_FILE $PKG_FILE 
+    mkdir -p "$BUILD_DIR/customfiles" 
     ALL_PACKAGES=`cat "$PROFILE" | while read trait;do
         echo "Handling $TRAIT_DIR/$trait" >&2        
         handle_trait_dir "$TRAIT_DIR/$trait" ||:
