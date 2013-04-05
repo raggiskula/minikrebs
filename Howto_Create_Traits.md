@@ -45,6 +45,8 @@ All files and folders in the files/ folder will be copied in the root folder of 
 the core/ trait contains basic simple additions to prepare the minikrebs for direct use 
 (like setting the password or symlinking the authorized_keys file).
 
+default password for the minikrebse is 'minikrebs'
+
 ## core/firstrun
 
 firstrun is a trait which will run scripts in /etc/firstrun.d/ only on first run (for example 
